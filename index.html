@@ -13,10 +13,10 @@
 </head>
 <body>
 
-<h1>Wordle Solution Analyzer</h1>
+<h1>Wordle Solution Analyser</h1>
 
 <label>
-  Enter Solution Word (5 letters):
+  Enter Solution Word:
   <input type="text" id="solutionInput" maxlength="5" style="text-transform:uppercase" />
 </label>
 <br /><br />
@@ -28,7 +28,6 @@
 <br /><br />
 
 <button id="analyzeBtn" disabled>Analyze</button>
-<div id="loadingMessage">Loading word list...</div>
 
 <h2>Results</h2>
 <div id="results"></div>
@@ -46,14 +45,8 @@ function loadWordList() {
     })
     .then(data => {
       wordList = data.map(w => w.toUpperCase());
-      document.getElementById('loadingMessage').textContent = 'Word list loaded.';
       document.getElementById('analyzeBtn').disabled = false;
     })
-    .catch(err => {
-      console.error('Failed to load word list:', err);
-      document.getElementById('loadingMessage').textContent = 'Failed to load word list.';
-      alert('Could not load the word list JSON file.');
-    });
 }
 
 // Return Wordle feedback pattern for guess vs target
