@@ -27,17 +27,34 @@
 </label>
 <br /><br />
 
-<button id="analyzeBtn">Analyze</button>
+<button id="analyzeBtn" disabled>Analyze</button>
+<div id="loadingMessage">Loading word list...</div>
 
 <h2>Results</h2>
 <div id="results"></div>
 
 <script>
-// Sample word list - replace or load a full JSON array of 5-letter words
-const wordList = [
-  "CRANE", "BRAVE", "GLARE", "PLANE", "SLATE", "CRATE", "BLAST", "TRAIL",
-  "SLAIN", "GRAIN", "TRAIN", "PLAIN", "CLAIM", "FLAIR", "CLAIR", "GLINT"
-];
+let wordList = [];
+
+function loadWordList() {
+  return fetch('words.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      wordList = data.map(w => w.toUpperCase());
+      document.getElementById('loadingMessage').textContent = 'Word list loaded.';
+      document.getElementById('analyzeBtn').disabled = false;
+    })
+    .catch(err => {
+      console.error('Failed to load word list:', err);
+      document.getElementById('loadingMessage').textContent = 'Failed to load word list.';
+      alert('Could not load the word list JSON file.');
+    });
+}
 
 // Return Wordle feedback pattern for guess vs target
 // 'G' = green (correct spot), 'Y' = yellow (present wrong spot), 'B' = black (absent)
@@ -122,6 +139,7 @@ function analyze() {
   });
 }
 
+loadWordList();
 document.getElementById('analyzeBtn').addEventListener('click', analyze);
 </script>
 
