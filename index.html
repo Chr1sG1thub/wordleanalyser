@@ -109,9 +109,9 @@ function analyze() {
   guesses.forEach((guess, i) => {
   let fb = wordleFeedback(guess, solution);
   for (let j = 0; j < 5; j++) {
-    if (fb[j] == 'G') col = 'red';
-    else if (fb[j] == 'Y') col = 'yellow';
-    else col = 'black';
+    if (fb[j] == 'G') {col = 'red';}
+    else if (fb[j] == 'Y') {col = 'yellow'};
+    else {col = 'black';}
   }
   const div = document.createElement('div');
   div.innerHTML = `<span style="color: ${col};">${guess[j]}</span>`; // Can be HTML.
