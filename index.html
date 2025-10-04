@@ -108,7 +108,7 @@ function analyze() {
   const div = document.createElement('div');
   guesses.forEach((guess, i) => {
   for (let j = 0; j < 5; j++) {
-  div.innerHTML = '<span style="color: red;">Q</span>'; // Can be HTML.
+  div.innerHTML = '<span style="color: red;">${guess[j]}</span>'; // Can be HTML.
   box.appendChild(div);
   box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
 
