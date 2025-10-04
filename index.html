@@ -78,14 +78,6 @@ function wordleFeedback(guess, target) {
       }
     }
   }
-      const box = document.getElementById('textBox');
-  const div = document.createElement('div');
-  for (let i = 0; i < 5; i++) {
-  div.innerHTML = '<span style="color: red;">Q</span>'; // Can be HTML.
-  box.appendChild(div);
-  box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
-
-  }
   return feedback.join('');
 }
 
@@ -112,7 +104,15 @@ function analyze() {
   let resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
   
+  const box = document.getElementById('textBox');
+  const div = document.createElement('div');
   guesses.forEach((guess, i) => {
+  for (let j = 0; j < 5; j++) {
+  div.innerHTML = '<span style="color: red;">Q</span>'; // Can be HTML.
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
+
+  }
     let fb = wordleFeedback(guess, solution);
     remaining = filterCandidates(remaining, guess, fb);
     
