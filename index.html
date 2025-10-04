@@ -104,13 +104,14 @@ function analyze() {
   let resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
   
+  var col;
   const box = document.getElementById('textBox');
   guesses.forEach((guess, i) => {
   let fb = wordleFeedback(guess, solution);
   for (let j = 0; j < 5; j++) {
-    if (fb[j] == 'G') let col = 'red';
-    else if (fb[j] == 'Y') let col = 'yellow';
-    else let col = 'black';
+    if (fb[j] == 'G') col = 'red';
+    else if (fb[j] == 'Y') col = 'yellow';
+    else col = 'black';
   }
   const div = document.createElement('div');
   div.innerHTML = `<span style="color: ${col};">${guess[j]}</span>`; // Can be HTML.
