@@ -106,14 +106,18 @@ function analyze() {
   
   const box = document.getElementById('textBox');
   guesses.forEach((guess, i) => {
+  let fb = wordleFeedback(guess, solution);
   for (let j = 0; j < 5; j++) {
+    if (fb[j] == 'G') let col = 'red';
+    else if (fb[j] == 'Y') let col = 'yellow';
+    else let col = 'black';
+  }
   const div = document.createElement('div');
-  div.innerHTML = `<span style="color: red;">${guess[j]}</span>`; // Can be HTML.
+  div.innerHTML = `<span style="color: ${col};">${guess[j]}</span>`; // Can be HTML.
   box.appendChild(div);
   box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
 
   }
-    let fb = wordleFeedback(guess, solution);
     remaining = filterCandidates(remaining, guess, fb);
     
     // Display count and clickable text to show words list
