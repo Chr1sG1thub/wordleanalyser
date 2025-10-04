@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chris's Wordle Analyser</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 2em; }
+  input, button { font-size: 1em; padding: 0.3em; }
+  .words-list { margin-top: 0.5em; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 0.5em; }
+  .words-list span { display: inline-block; margin: 0.2em 0.5em 0.2em 0; background: #eee; padding: 0.2em 0.5em; border-radius: 0.3em; cursor: default; }
+</style>
+</head>
+<body>
+
+<h2>Chris's Wordle Analyser</h2>
+
+<label>
+  Solution:
+  <input type="text" id="solutionInput" maxlength="5" style="text-transform:uppercase" />
+</label>
+<br /><br />
+
+<label>
+  Enter Guesses (comma separated):
+  <input type="text" id="guessesInput" style="width: 300px; text-transform:uppercase" />
+</label>
+<br /><br />
+
+<button id="analyzeBtn" disabled>Analyse</button>
+
+<h2>Results</h2>
+<div id="results"></div>
+
+<script>
+let wordList = [];
+
+function loadWordList() {
+  return fetch('words.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      wordList = data.map(w => w.toUpperCase());
+      document.getElementById('analyzeBtn').disabled = false;
+    })
+}
+
+// Return Wordle feedback pattern for guess vs target
+// 'G' = green (correct spot), 'Y' = yellow (present wrong spot), 'B' = black (absent)
+function wordleFeedback(guess, target) {
+  guess = guess.toUpperCase();
+  target = target.toUpperCase();
+  let feedback = Array(5).fill('B');
+  let targetLetters = target.split('');
+  
+  // First pass for greens
+  for (let i = 0; i < 5; i++) {
+    if (guess[i] === target[i]) {
+      feedback[i] = 'G';
+      targetLetters[i] = null; // mark matched
+    }
+  }
+  // Second pass for yellows
+  for (let i = 0; i < 5; i++) {
+    if (feedback[i] === 'B') {
+      let index = targetLetters.indexOf(guess[i]);
+      if (index !== -1) {
+        feedback[i] = 'Y';
+        targetLetters[index] = null; // mark matched
+      }
+    }
+  }
+  return feedback.join('');
+}
+
+// Filter word list to only words that produce same feedback for guess as solution feedback
+function filterCandidates(candidates, guess, feedback) {
+  return candidates.filter(word => wordleFeedback(guess, word) === feedback);
+}
+
+// Main analyze function
+function analyze() {
+  let solution = document.getElementById('solutionInput').value.toUpperCase();
+  let guessesRaw = document.getElementById('guessesInput').value.toUpperCase();
+  if (solution.length !== 5) {
+    alert("Please enter a 5-letter solution word.");
+    return;
+  }
+  let guesses = guessesRaw.split(',').map(g => g.trim()).filter(g => g.length === 5);
+  if (guesses.length === 0) {
+    alert("Please enter at least one 5-letter guess separated by commas.");
+    return;
+  }
+  
+  let remaining = wordList.slice(); // copy initial list
+  let resultsDiv = document.getElementById('results');
+  resultsDiv.innerHTML = '';
+  
+  guesses.forEach((guess, i) => {
+    let fb = wordleFeedback(guess, solution);
+    remaining = filterCandidates(remaining, guess, fb);
+    
+    // Display count and clickable text to show words list
+    let container = document.createElement('div');
+    let title = document.createElement('strong');
+    title.textContent = `After guess ${i+1} (${guess}): ${remaining.length} possible words`;
+    container.appendChild(title);
+
+    if (remaining.length > 0) {
+      let showBtn = document.createElement('button');
+      showBtn.textContent = 'Show Words';
+      showBtn.style.marginLeft = '0.5em';
+      let wordsList = document.createElement('div');
+      wordsList.className = 'words-list';
+      wordsList.style.display = 'none';
+      remaining.forEach(w => {
+        let span = document.createElement('span');
+        span.textContent = w;
+        wordsList.appendChild(span);
+      });
+      showBtn.addEventListener('click', () => {
+        wordsList.style.display = wordsList.style.display === 'none' ? 'block' : 'none';
+      });
+      container.appendChild(showBtn);
+      container.appendChild(wordsList);
+    }
+    resultsDiv.appendChild(container);
+  });
+}
+
+loadWordList();
+document.getElementById('analyzeBtn').addEventListener('click', analyze);
+</script>
+
+</body>
+</html>
