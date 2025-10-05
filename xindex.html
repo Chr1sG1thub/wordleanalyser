@@ -106,16 +106,16 @@ function analyze() {
   
   var col;
   const box = document.getElementById('textArea');
-  box.value = '';
+  box.clear;
   guesses.forEach((guess, i) => {
     let fb = wordleFeedback(guess, solution);
     var span5 = "";
     for (let j = 0; j < 5; j++) {
       if (fb[j] == 'G') col = 'green';
-      else if (fb[j] == 'Y') col = 'yellow';
+      else if (fb[j] == 'Y') col = 'gold';
       else col = 'black';
   
-      span5 = span5 + '<span style="font-size : 24px; color : white; background-color: '+col+';">'+guess[j]+'</span>';
+      span5 = span5 + '<span style="font-size : 20px; color : white; background-color: '+col+';">'+guess[j]+'</span>';
     }
       const div = document.createElement('div');
         div.innerHTML = span5;
