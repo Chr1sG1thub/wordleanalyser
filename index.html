@@ -144,7 +144,7 @@ function analyze() {
       });
       showBtn.addEventListener('click', () => {
         wordsList.style.display = wordsList.style.display === 'none' ? 'block' : 'none';
-        this.content = wordsList.style.display === 'none' ? 'Show Words' : 'Hide Words';
+        this.innerHTML = wordsList.style.display === 'none' ? 'Show Words' : 'Hide Words';
       });
       container.appendChild(showBtn);
       container.appendChild(wordsList);
