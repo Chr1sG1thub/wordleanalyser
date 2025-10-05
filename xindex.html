@@ -29,7 +29,7 @@
 
 <button id="analyzeBtn" disabled>Analyse</button>
 
-<div id="textArea" style="width: 400px; height: 200px; border: 1px solid #bbb; padding: 10px; font-family: monospace; overflow-y: auto; background: #fafafa;">
+<div id="textArea" style="width: 10px; height: 100px; border: 1px solid #bbb; padding: 10px; font-family: monospace; overflow-y: auto; background: #fafafa;">
   <!-- Text lines will appear here -->
 </div>
 
@@ -105,11 +105,11 @@ function analyze() {
   resultsDiv.innerHTML = '';
   
   var col;
-  var span5 = "";
   const box = document.getElementById('textArea');
   box.value = '';
   guesses.forEach((guess, i) => {
     let fb = wordleFeedback(guess, solution);
+    var span5 = "";
     for (let j = 0; j < 5; j++) {
       if (fb[j] == 'G') col = 'green';
       else if (fb[j] == 'Y') col = 'yellow';
