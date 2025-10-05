@@ -105,12 +105,12 @@ function analyze() {
   resultsDiv.innerHTML = '';
   
   var col;
-  const box = document.getElementById('textBox');
+  const box = document.getElementById('textArea');
   box.value = '';
   guesses.forEach((guess, i) => {
   let fb = wordleFeedback(guess, solution);
   for (let j = 0; j < 5; j++) {
-    if (fb[j] == 'G') col = 'red';
+    if (fb[j] == 'G') col = 'green';
     else if (fb[j] == 'Y') col = 'yellow';
     else col = 'black';
   
