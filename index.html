@@ -22,7 +22,7 @@
 <br /><br />
 
 <label>
-  Enter Guesses (comma separated):
+  Enter Guesses (space separated):
   <input type="text" id="guessesInput" style="width: 300px; text-transform:uppercase" />
 </label>
 <br /><br />
@@ -93,9 +93,9 @@ function analyze() {
     alert("Please enter a 5-letter solution word.");
     return;
   }
-  let guesses = guessesRaw.split(',').map(g => g.trim()).filter(g => g.length === 5);
+  let guesses = guessesRaw.split(' ').map(g => g.trim()).filter(g => g.length === 5);
   if (guesses.length === 0) {
-    alert("Please enter at least one 5-letter guess separated by commas.");
+    alert("Please enter at least one 5-letter guess, or more separated by spaces.");
     return;
   }
   
