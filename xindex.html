@@ -29,7 +29,7 @@
 
 <button id="analyzeBtn" disabled>Analyse</button>
 
-<div id="textArea" style="width: 10px; height: 100px; border: 1px solid #bbb; padding: 10px; font-family: monospace; overflow-y: auto; background: #fafafa;">
+<div id="textArea" style="width: 100px; height: 60px; border: 1px solid #bbb; padding: 10px; font-family: monospace; overflow-y: auto; background: #fafafa;">
   <!-- Text lines will appear here -->
 </div>
 
@@ -115,7 +115,7 @@ function analyze() {
       else if (fb[j] == 'Y') col = 'yellow';
       else col = 'black';
   
-      span5 = span5 + '<span style="color : white; background-color: '+col+';">'+guess[j]+'</span>';
+      span5 = span5 + '<span style="font-size : 24px; color : white; background-color: '+col+';">'+guess[j]+'</span>';
     }
       const div = document.createElement('div');
         div.innerHTML = span5;
