@@ -115,7 +115,7 @@ function analyze() {
       else if (fb[j] == 'Y') col = 'gold';
       else col = 'black';
   
-      span5 = span5 + '<span style="font-size : 20px; color : white; background-color: '+col+';">'+guess[j]+'</span>';
+      span5 = span5 + '<span style="font-size : 20px; color : white; border-width : 1px; background-color: '+col+';">'+guess[j]+'</span>';
     }
       const div = document.createElement('div');
         div.innerHTML = span5;
