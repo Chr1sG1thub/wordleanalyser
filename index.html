@@ -28,13 +28,12 @@
 <br /><br />
 
 <button id="analyzeBtn" disabled>Analyse</button>
-
-<div id="textArea" hidden style="padding: 10px; font-family: monospace;">
+<p></p>
+<div id="textArea" hidden style="font-family: monospace;">
   <!-- Text lines will appear here -->
 </div>
-
-<div id="results" hidden>  <h2>Results</h2>
-</div>
+<p></p>
+<div id="results" hidden></div>
 
 <script>
 let wordList = [];
@@ -102,7 +101,7 @@ function analyze() {
   
   let remaining = wordList.slice(); // copy initial list
   let resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '';
+  resultsDiv.innerHTML = '<h2>Results</h2>';
   
   var col;
   const box = document.getElementById('textArea');
