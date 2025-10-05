@@ -115,9 +115,9 @@ function analyze() {
     else col = 'black';
   
     const div = document.createElement('div');
-    div.innerHTML = `<span style="background-color: ${col};">${guess[j]}</span>`; // Can be HTML.
+    div.innerHTML = `<span style="color : white; background-color: ${col};">${guess[j]}</span>`; // Can be HTML.
     box.appendChild(div);
-    box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
+    //box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
   }
   
     remaining = filterCandidates(remaining, guess, fb);
