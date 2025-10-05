@@ -33,7 +33,7 @@
   <!-- Text lines will appear here -->
 </div>
 
-<div id="results">  <h2>Results</h2>
+<div id="results" hidden>  <h2>Results</h2>
 </div>
 
 <script>
@@ -150,6 +150,7 @@ function analyze() {
       container.appendChild(wordsList);
     }
     resultsDiv.appendChild(container);
+    resultsDiv.removeAttribute('hidden');
   });
 }
 
