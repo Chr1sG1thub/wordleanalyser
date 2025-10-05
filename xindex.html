@@ -106,7 +106,7 @@ function analyze() {
   
   var col;
   const box = document.getElementById('textArea');
-  box.clear();
+  box.textContent = '';
   guesses.forEach((guess, i) => {
     let fb = wordleFeedback(guess, solution);
     var span5 = "";
