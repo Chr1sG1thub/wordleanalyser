@@ -106,6 +106,7 @@ function analyze() {
   
   var col;
   const box = document.getElementById('textBox');
+  box.value = '';
   guesses.forEach((guess, i) => {
   let fb = wordleFeedback(guess, solution);
   for (let j = 0; j < 5; j++) {
@@ -114,7 +115,7 @@ function analyze() {
     else col = 'black';
   
     const div = document.createElement('div');
-    div.innerHTML = `<span style="color: ${col};">${guess[j]}</span>`; // Can be HTML.
+    div.innerHTML = `<span style="background-color: ${col};">${guess[j]}</span>`; // Can be HTML.
     box.appendChild(div);
     box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
   }
