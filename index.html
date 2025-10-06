@@ -117,6 +117,7 @@ function analyze() {
   
       span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: '+col+';">'+guess[j]+'</span>';
     }
+      span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: green;">'+solution+'</span>';
       const div = document.createElement('div');
         div.innerHTML = span5;
       box.appendChild(div);
