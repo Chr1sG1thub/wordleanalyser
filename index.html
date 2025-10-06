@@ -45,12 +45,12 @@ function loadWordList() {
         throw new Error('Network response was not ok');
       }
       return response.json();
-    })
+    }) // .then(response
     .then(data => {
       wordList = data.map(w => w.toUpperCase());
       document.getElementById('analyzeBtn').disabled = false;
-    })
-}
+    }) // .then(data
+} // function loadWordList
 
 // Return Wordle feedback pattern for guess vs target
 // 'G' = green (correct spot), 'Y' = yellow (present wrong spot), 'B' = black (absent)
@@ -66,7 +66,7 @@ function wordleFeedback(guess, target) {
       feedback[i] = 'G';
       targetLetters[i] = null; // mark matched
     }
-  }
+  } // for
   // Second pass for yellows
   for (let i = 0; i < 5; i++) {
     if (feedback[i] === 'B') {
@@ -76,14 +76,14 @@ function wordleFeedback(guess, target) {
         targetLetters[index] = null; // mark matched
       }
     }
-  }
+  } // for
   return feedback.join('');
-}
+} // function wordleFeedback
 
 // Filter word list to only words that produce same feedback for guess as solution feedback
 function filterCandidates(candidates, guess, feedback) {
   return candidates.filter(word => wordleFeedback(guess, word) === feedback);
-}
+} // function filterCandidates
 
 // Main analyze function
 function analyze() {
@@ -141,26 +141,27 @@ function analyze() {
         let span = document.createElement('span');
         span.textContent = w;
         wordsList.appendChild(span);
-      }); //forEach
-     var span5 = "";
-    for (let j = 0; j < 5; j++) {
-           span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: green;">'+solution[j]+'</span>';
-    }
-        const div = document.createElement('div');
-      div.innerHTML = span5;
-      box.appendChild(div);
+      }); //remaining.forEach
 
       showBtn.addEventListener('click', () => {
         wordsList.style.display = wordsList.style.display === 'none' ? 'block' : 'none';
         showBtn.textContent = wordsList.style.display === 'none' ? 'Show Words' : 'Hide Words';
-      });
+      }); // showBtn.addEventListener
       container.appendChild(showBtn);
       container.appendChild(wordsList);
-    }
+    } // if (remaining.length > 0)
     resultsDiv.appendChild(container);
     resultsDiv.removeAttribute('hidden');
-  });
-}
+  }); // guesses.forEach
+       var span5 = "";
+    for (let j = 0; j < 5; j++) {
+           span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: green;">'+solution[j]+'</span>';
+    } //for
+        const div = document.createElement('div');
+      div.innerHTML = span5;
+      box.appendChild(div);
+
+} // function analyze
 
 loadWordList();
 document.getElementById('analyzeBtn').addEventListener('click', analyze);
