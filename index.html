@@ -116,10 +116,9 @@ function analyze() {
       else col = 'black';
   
       span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: '+col+';">'+guess[j]+'</span>';
-    }
-      span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: green;">'+solution+'</span>';
+    } // for
       const div = document.createElement('div');
-        div.innerHTML = span5;
+      div.innerHTML = span5;
       box.appendChild(div);
     //box.scrollTop = box.scrollHeight; // Scroll to bottom on new line.
 
@@ -142,7 +141,15 @@ function analyze() {
         let span = document.createElement('span');
         span.textContent = w;
         wordsList.appendChild(span);
-      });
+      }); //forEach
+     var span5 = "";
+    for (let j = 0; j < 5; j++) {
+           span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: green;">'+solution[j]+'</span>';
+    }
+        const div = document.createElement('div');
+      div.innerHTML = span5;
+      box.appendChild(div);
+
       showBtn.addEventListener('click', () => {
         wordsList.style.display = wordsList.style.display === 'none' ? 'block' : 'none';
         showBtn.textContent = wordsList.style.display === 'none' ? 'Show Words' : 'Hide Words';
