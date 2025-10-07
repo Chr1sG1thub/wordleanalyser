@@ -115,7 +115,7 @@ function analyze() {
       else if (fb[j] == 'Y') col = 'gold';
       else col = 'black';
   
-      span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: '+col+';">'+guess[j]+'</span>';
+      span5 = span5 + '<span style="font-size : 20px; color : white; padding : 3px; margin-right : 2px; display : inline-block; background-color: '+col+';">'+guess[j]+'</span>';
     } // for
       const div = document.createElement('div');
       div.innerHTML = span5;
@@ -155,7 +155,7 @@ function analyze() {
   }); // guesses.forEach
        var span5 = "";
     for (let j = 0; j < 5; j++) {
-           span5 = span5 + '<span style="font-size : 20px; color : white; padding : 1px; margin-right : 2px; display : inline-block; background-color: green;">'+solution[j]+'</span>';
+           span5 = span5 + '<span style="font-size : 20px; color : white; padding : 3px; margin-right : 2px; display : inline-block; background-color: green;">'+solution[j]+'</span>';
     } //for
         const div = document.createElement('div');
       div.innerHTML = span5;
