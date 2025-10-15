@@ -36,6 +36,11 @@
 <div id="results" hidden></div>
 
 <script>
+
+if (/iPhone/.test(navigator.userAgent)) {
+  document.getElementById('guessesInput').value = 'ARISE ';
+}
+
 let wordList = [];
 
 function loadWordList() {
