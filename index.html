@@ -120,7 +120,7 @@ function analyze() {
       else if (fb[j] == 'Y') col = 'goldenrod';
       else col = 'darkslategrey';
   
-      span5 = span5 + '<span style="font-size : 20px; color : white; padding : 3px; margin-right : 2px; margin-top : 2px; display : inline-block; background-color: '+col+';">'+guess[j]+'</span>';
+      span5 = span5 + '<span style="font-size : 20px; color : white; padding : 3px; margin-right : 2px; margin-top : 2px; width: 50px; height: 50px; display : inline-block; background-color: '+col+';">'+guess[j]+'</span>';
     } // for
       const div = document.createElement('div');
       div.innerHTML = span5;
