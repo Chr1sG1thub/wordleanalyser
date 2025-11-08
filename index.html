@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wordle Analyser</title>
-    <link rel="shortcut icon" type="image/png" href="brain.png"> 
+<link rel="manifest" href="/wordleanalyser/manifest.json">
 <style>
   body { font-family: Arial, sans-serif; margin: 2em; }
   input, button { font-size: 1em; padding: 0.3em; }
@@ -38,7 +38,13 @@
 
 <script>
 
-if (/iPhone/.test(navigator.userAgent)) {
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/wordleanalyser/service-worker.js')
+  .then(reg => console.log('Service Worker registered', reg))
+  .catch(err => console.error('Service Worker registration failed', err));
+}
+
+    if (/iPhone/.test(navigator.userAgent)) {
   document.getElementById('guessesInput').value = 'ARISE ';
 }
 
