@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-cache-v7'; // Change version to update cache
+/*const CACHE_NAME = 'my-cache-v7'; // Change version to update cache
 const FILES_TO_CACHE = [
   '/wordleanalyser/index.html',
   '/wordleanalyser/words.json' // The file you updated
@@ -41,4 +41,18 @@ self.addEventListener('fetch', event => {
       return response || fetch(event.request);
     })
   );
+}); */
+self.addEventListener('install', event => {
+  // No files to cache
+  self.skipWaiting(); // Optional: activate immediately
 });
+
+self.addEventListener('activate', event => {
+  self.clients.claim(); // Take control of pages immediately
+});
+
+self.addEventListener('fetch', event => {
+  // Always fetch from network, no caching
+  event.respondWith(fetch(event.request));
+});
+
