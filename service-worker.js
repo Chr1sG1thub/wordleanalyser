@@ -10,6 +10,7 @@ caches.keys().then(cacheNames => {
 
 self.addEventListener('install', event => {
   // Precache updated assets
+  console.log('Install...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(FILES_TO_CACHE))
@@ -17,6 +18,7 @@ self.addEventListener('install', event => {
   );
 });
 
+  console.log('Activate...');
 self.addEventListener('activate', event => {
   // Remove old caches
   event.waitUntil(
@@ -32,6 +34,7 @@ self.addEventListener('activate', event => {
   );
 });
 
+  console.log('Fetch...');
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
