@@ -4,6 +4,10 @@ const FILES_TO_CACHE = [
   '/wordleanalyser/words.json' // The file you updated
 ];
 
+caches.keys().then(cacheNames => {
+  console.log('Cache versions:', cacheNames);
+});
+
 self.addEventListener('install', event => {
   // Precache updated assets
   event.waitUntil(
