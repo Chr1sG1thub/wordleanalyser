@@ -1,7 +1,6 @@
 const CACHE_NAME = 'my-cache-v2'; // Change version to update cache
 const FILES_TO_CACHE = [
-  '/wordleanalyser/index.html',
-  '/wordleanalyser/words.json'  // The file you updated
+  '/wordleanalyser/index.html'  // The file you updated
 ];
 
 self.addEventListener('install', event => {
