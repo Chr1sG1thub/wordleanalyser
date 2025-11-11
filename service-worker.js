@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-cache-v4'; // Change version to update cache
+const CACHE_NAME = 'my-cache-v5'; // Change version to update cache
 const FILES_TO_CACHE = [
   '/wordleanalyser/index.html',
   '/wordleanalyser/words.json' // The file you updated
