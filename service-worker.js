@@ -1,22 +1,37 @@
+const CACHE_NAME = 'my-cache-v2'; // Change version to update cache
+const FILES_TO_CACHE = [
+  '/wordleanalyser/index.html',
+  '/wordleanalyser/words.json'  // The file you updated
+];
+
 self.addEventListener('install', event => {
+  // Precache updated assets
   event.waitUntil(
-    caches.open('v2').then(cache =>
-      cache.addAll([
-       '/wordleanalyser/index.html',
-       '/wordleanalyser/words.json'
-       ])
-    )
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
+      .then(() => self.skipWaiting()) // Activate new SW immediately
   );
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+  // Remove old caches
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(name => {
+          if (name !== CACHE_NAME) {
+            return caches.delete(name);
+          }
+        })
+      );
+    }).then(() => self.clients.claim()) // Take control of clients immediately
+  );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response =>
-      response || fetch(event.request)
-    )
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });
