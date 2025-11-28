@@ -1,58 +1,51 @@
-/*const CACHE_NAME = 'my-cache-v7'; // Change version to update cache
-const FILES_TO_CACHE = [
-  '/wordleanalyser/index.html',
-  '/wordleanalyser/words.json' // The file you updated
-];
+// service-worker.js - Updated to STOP caching files and clear existing caches
+const CACHE_NAME = 'no-cache-v1';
 
-caches.keys().then(cacheNames => {
-  console.log('Cache versions:', cacheNames);
-});
-
+// Install event: Skip waiting and do NOT populate any cache
 self.addEventListener('install', event => {
-  // Precache updated assets
-  console.log('Install...');
+  console.log('Service Worker: Installing - No caching enabled');
+  // Force immediate activation without waiting for old tabs to close
+  self.skipWaiting();
+  
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(FILES_TO_CACHE))
-      .then(() => self.skipWaiting()) // Activate new SW immediately
+    // Optional: Pre-cache nothing - we're disabling caching entirely
+    Promise.resolve()
   );
 });
 
-  console.log('Activate...');
+// Activate event: Clear ALL existing caches and take control immediately
 self.addEventListener('activate', event => {
-  // Remove old caches
+  console.log('Service Worker: Activating - Clearing all old caches');
+  
+  // Take control of all pages immediately
+  self.clients.claim();
+  
   event.waitUntil(
+    // Delete ALL existing caches to stop serving cached content
     caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map(name => {
-          if (name !== CACHE_NAME) {
-            return caches.delete(name);
-          }
+        cacheNames.map(cacheName => {
+          console.log('Service Worker: Deleting old cache:', cacheName);
+          return caches.delete(cacheName);
         })
       );
-    }).then(() => self.clients.claim()) // Take control of clients immediately
-  );
-});
-
-  console.log('Fetch...');
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
     })
   );
-}); */
-self.addEventListener('install', event => {
-  // No files to cache
-  self.skipWaiting(); // Optional: activate immediately
 });
 
-self.addEventListener('activate', event => {
-  self.clients.claim(); // Take control of pages immediately
-});
-
+// Fetch event: Bypass cache entirely - always fetch from network
 self.addEventListener('fetch', event => {
-  // Always fetch from network, no caching
-  event.respondWith(fetch(event.request));
+  // Never respond from cache - always go to network
+  event.respondWith(
+    fetch(event.request).catch(err => {
+      console.error('Service Worker: Network fetch failed:', err);
+      // Optional: Return offline page for critical resources
+      if (event.request.destination === 'document') {
+        return new Response('Offline - Caching disabled', {
+          status: 503,
+          statusText: 'Service Unavailable'
+        });
+      }
+    })
+  );
 });
-
