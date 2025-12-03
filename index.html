@@ -65,6 +65,9 @@ function loadWordList() {
       wordList = data.map(w => w.toUpperCase());
 
     }) // .then(data
+       .catch(error => {
+       console.error("Failed to load word list:", error);
+       })
   
    return fetch('allwords.json')
     .then(response => {
