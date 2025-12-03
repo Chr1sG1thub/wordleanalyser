@@ -30,6 +30,7 @@
 
 <button id="analyzeBtn" disabled>Analyse</button>
 <p></p>
+<button id="toggleBtn">Click for All Words</button>
 <div id="textArea" hidden style="font-family: monospace;">
   <!-- Text lines will appear here -->
 </div>
@@ -49,9 +50,22 @@ if ('serviceWorker' in navigator) {
 //}
 
 let wordList = [];
+let wordListAll = [];
+  
 
 function loadWordList() {
-  return fetch('words.json')
+   fetch('words.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }) // .then(response
+    .then(data => {
+      wordList = data.map(w => w.toUpperCase());
+      document.getElementById('analyzeBtn').disabled = false;
+    }) // .then(data
+   fetch('allwords.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -98,7 +112,7 @@ function filterCandidates(candidates, guess, feedback) {
 } // function filterCandidates
 
 // Main analyze function
-function analyze() {
+function analyze(isAll) {
   let solution = document.getElementById('solutionInput').value.toUpperCase();
   let guessesRaw = document.getElementById('guessesInput').value.toUpperCase();
   if (solution.length !== 5) {
@@ -110,8 +124,8 @@ function analyze() {
     alert("Please enter at least one 5-letter guess, or more separated by spaces.");
     return;
   }
-  
-  let remaining = wordList.slice(); // copy initial list
+  let remaining;
+  if (isAll) {remaining = wordListAll.slice();} else {remaining = wordList.slice();}
   let resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '<h2>Results</h2>';
   
@@ -176,7 +190,21 @@ function analyze() {
 } // function analyze
 
 loadWordList();
-document.getElementById('analyzeBtn').addEventListener('click', analyze);
+        const btn = document.getElementById('toggleBtn');
+        let isAll = false; // Initial state
+        
+        btn.addEventListener('click', function() {
+            isAll = !isAll; // Toggle state
+            
+            if (isAll) {
+                btn.textContent = 'Click for All Words';
+            } else {
+                btn.textContent = 'Click for Solution Words';
+           }
+        });
+        
+document.getElementById('analyzeBtn').addEventListener('click', analyze(isAll));
+
 </script>
 
 </body>
