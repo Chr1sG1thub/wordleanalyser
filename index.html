@@ -50,18 +50,21 @@ if ('serviceWorker' in navigator) {
 
 let wordList = [];
 
-function loadWordList() {
-  return fetch('words.json')
-    .then(response => {
+async function loadWordList() {
+  try {
+    const response = await fetch('words.json');
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Fetch of words.json was not ok');
       }
-      return response.json();
-    }) // .then(response
-    .then(data => {
+    const data = await response.json();
+       if (!data.ok) {
+        throw new Error('response.json was not ok');
+      }
       wordList = data.map(w => w.toUpperCase());
       document.getElementById('analyzeBtn').disabled = false;
-    }) // .then(data
+ } catch (error) {
+    console.error(error);
+  }
 } // function loadWordList
 
 // Return Wordle feedback pattern for guess vs target
