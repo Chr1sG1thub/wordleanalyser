@@ -63,8 +63,9 @@ function loadWordList() {
     }) // .then(response
     .then(data => {
       wordList = data.map(w => w.toUpperCase());
-      document.getElementById('analyzeBtn').disabled = false;
+
     }) // .then(data
+  
    fetch('allwords.json')
     .then(response => {
       if (!response.ok) {
@@ -73,7 +74,7 @@ function loadWordList() {
       return response.json();
     }) // .then(response
     .then(data => {
-      wordList = data.map(w => w.toUpperCase());
+      wordListAll = data.map(w => w.toUpperCase());
       document.getElementById('analyzeBtn').disabled = false;
     }) // .then(data
 } // function loadWordList
