@@ -110,7 +110,13 @@ function analyze() {
     alert("Please enter at least one 5-letter guess, or more separated by spaces.");
     return;
   }
-  
+
+ // If the solution word isn't in the Word List, add it in (temporarily, to prevent the zero-words problem...
+
+  if (!wordList.includes(solution)) {
+  wordList.push(solution);
+}
+
   let remaining = wordList.slice(); // copy initial list
   let resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '<h2>Results</h2>';
